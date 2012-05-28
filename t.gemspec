@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'tweetstream', '~> 1.1'
   gem.add_dependency 'twitter', '~> 2.4'
   gem.add_dependency 'twitter-text', '~> 1.4'
+  gem.add_dependency 'i18n', '~> 0.6.0'
   gem.add_development_dependency 'pry'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
