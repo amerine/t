@@ -299,7 +299,7 @@ module T
     end
     map %w(df doesfollow) => :does_follow
 
-    desc "favorite STATUS_ID [STATUS_ID...]", "Marks Tweets as favorites."
+    desc "favorite STATUS_ID [STATUS_ID...]", I18n.t("tasks.favorite.desc")
     def favorite(status_id, *status_ids)
       status_ids.unshift(status_id)
       status_ids.map!(&:to_i)
@@ -311,9 +311,11 @@ module T
         end
       end
       number = favorites.length
-      say "@#{@rcfile.active_profile[0]} favorited #{number} #{number == 1 ? 'tweet' : 'tweets'}."
+      say I18n.t("tasks.favorite.favorited", :profile => @rcfile.active_profile[0], :count => number)
       say
-      say "Run `#{File.basename($0)} delete favorite #{status_ids.join(' ')}` to unfavorite."
+      say I18n.t("tasks.favorite.delete-favorite-instructions",
+                 :command_name => File.basename($0),
+                 :status_ids => status_ids.join(' '))
     end
     map %w(fave favourite) => :favorite
 

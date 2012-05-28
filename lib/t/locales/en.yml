@@ -69,3 +69,10 @@ en:
       desc: "Find out whether one user follows another."
       follows: "Yes, @%{user1} follows @%{user2}."
       does-not-follow: "No, @%{user1} does not follow @%{user2}."
+
+    favorite:
+      desc: "Marks Tweets as favorites."
+      favorited:
+        one: "@%{profile} favorited 1 tweet."
+        other: "@%{prifle} favorited #{count} tweets."
+      delete-favorite-instructions: "Run `%{command_name} delete favorite %{status_ids}` to unfavorite."
