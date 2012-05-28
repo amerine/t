@@ -32,3 +32,10 @@ en:
         one: "@%{username} blocked 1 user."
         other: "@%{username} %{count} users."
       unblock-instructions: "Run `%{command_name} delete block %{users_list}` to unblock."
+
+    direct_messages:
+      desc: "Returns the %{default_min} most recent Direct Messages sent to you."
+      csv: "Output in CSV format."
+      long: "Output in long format."
+      number: "Limit the number of results."
+      reverse: "Reverse the order of the sort."
