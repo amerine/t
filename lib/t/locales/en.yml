@@ -133,3 +133,10 @@ en:
       reported:
         one: "@%{profile} reported 1 user."
         other: "@%{profile} reported %{count} users."
+
+    retweet:
+      desc: "Sends Tweets to your followers."
+      retweeted:
+        one: "@%{profile} retweeted 1 tweet."
+        other: "@%{profile} retweeted %{count} tweet."
+      delete-instructions: "Run `%{command_name} delete status %{retweets}` to undo."

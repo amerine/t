@@ -642,7 +642,7 @@ module T
     end
     map %w(report reportspam spam) => :report_spam
 
-    desc "retweet STATUS_ID [STATUS_ID...]", "Sends Tweets to your followers."
+    desc "retweet STATUS_ID [STATUS_ID...]", I18n.t("tasks.retweet.desc")
     def retweet(status_id, *status_ids)
       status_ids.unshift(status_id)
       status_ids.map!(&:to_i)
@@ -654,9 +654,11 @@ module T
         end
       end
       number = retweets.length
-      say "@#{@rcfile.active_profile[0]} retweeted #{number} #{number == 1 ? 'tweet' : 'tweets'}."
+      say I18n.t("tasks.retweet.retweeted", :profile => @rcfile.active_profile[0], :count => number)
       say
-      say "Run `#{File.basename($0)} delete status #{retweets.map(&:id).join(' ')}` to undo."
+      say I18n.t("tasks.retweet.delete-instructions",
+                 :command_name => File.basename($0),
+                 :retweets => retweets.map(&:id).join(' '))
     end
     map %w(rt) => :retweet
 
