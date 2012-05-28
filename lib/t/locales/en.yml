@@ -64,3 +64,8 @@ en:
       desc: "Find out whether a list contains a user."
       list-member-true: "Yes, @%{owner}/%{list} contains @%{user}."
       list-member-false: "No, @%{owner}/%{list} does not contain @%{user}."
+
+    does_follow:
+      desc: "Find out whether one user follows another."
+      follows: "Yes, @%{user1} follows @%{user2}."
+      does-not-follow: "No, @%{user1} does not follow @%{user2}."

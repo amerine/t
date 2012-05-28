@@ -272,8 +272,8 @@ module T
     end
     map %w(dc doescontain) => :does_contain
 
-    desc "does_follow USER [USER]", "Find out whether one user follows another."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify user via ID instead of screen name."
+    desc "does_follow USER [USER]", I18n.t("tasks.does_follow.desc")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.common_options.id")
     def does_follow(user1, user2=nil)
       require 't/core_ext/string'
       user1 = if options['id']
@@ -291,9 +291,9 @@ module T
         end
       end
       if client.friendship?(user1, user2)
-        say "Yes, @#{user1} follows @#{user2}."
+        say I18n.t("tasks.does_follow.follows", :user1 => user1, :user2 => user2)
       else
-        say "No, @#{user1} does not follow @#{user2}."
+        say I18n.t("tasks.does_follow.does-not-follow", :user1 => user1, :user2 => user2)
         exit 1
       end
     end
