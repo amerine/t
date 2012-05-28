@@ -14,6 +14,7 @@ module T
   autoload :Search, 't/search'
   autoload :Set, 't/set'
   autoload :Stream, 't/stream'
+  autoload :Translations, 't/translations'
   autoload :Version, 't/version'
   class CLI < Thor
     include T::Authorizable
@@ -21,14 +22,12 @@ module T
     include T::Printable
     include T::Requestable
     include T::FormatHelpers
+    include T::Translations
 
     DEFAULT_NUM_RESULTS = 20
     MAX_USERS_PER_REQUEST = 100
     DIRECT_MESSAGE_HEADINGS = ["ID", "Posted at", "Screen name", "Text"]
     TREND_HEADINGS = ["WOEID", "Parent ID", "Type", "Name", "Country"]
-
-    I18n.load_path = Dir[File.expand_path(File.join("..", "locales", "*.yml"), __FILE__)]
-    I18n.locale = :en
 
     check_unknown_options!
 
