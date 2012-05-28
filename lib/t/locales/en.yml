@@ -215,3 +215,18 @@ en:
 
     whois:
       desc: "Retrieves profile information for the user."
+
+    delete:
+      desc: "Delete Tweets, Direct Messages, etc."
+
+    list:
+      desc: "Do various things with lists."
+
+    search:
+      desc: "Search through Tweets."
+
+    set:
+      desc: "Change various account settings."
+
+    stream:
+      desc: "Commands for streaming Tweets."

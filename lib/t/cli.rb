@@ -929,19 +929,19 @@ module T
     end
     map %w(user) => :whois
 
-    desc "delete SUBCOMMAND ...ARGS", "Delete Tweets, Direct Messages, etc."
+    desc "delete SUBCOMMAND ...ARGS", I18n.t("tasks.delete.desc")
     subcommand 'delete', T::Delete
 
-    desc "list SUBCOMMAND ...ARGS", "Do various things with lists."
+    desc "list SUBCOMMAND ...ARGS", I18n.t("tasks.list.desc")
     subcommand 'list', T::List
 
-    desc "search SUBCOMMAND ...ARGS", "Search through Tweets."
+    desc "search SUBCOMMAND ...ARGS", I18n.t("tasks.search.desc")
     subcommand 'search', T::Search
 
-    desc "set SUBCOMMAND ...ARGS", "Change various account settings."
+    desc "set SUBCOMMAND ...ARGS", I18n.t("tasks.set.desc")
     subcommand 'set', T::Set
 
-    desc "stream SUBCOMMAND ...ARGS", "Commands for streaming Tweets."
+    desc "stream SUBCOMMAND ...ARGS", I18n.t("tasks.stream.desc")
     subcommand 'stream', T::Stream
 
   private
