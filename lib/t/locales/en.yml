@@ -159,3 +159,6 @@ en:
 
     status:
       desc: "Retrieves detailed information about a Tweet."
+
+    suggest:
+      desc: "Returns a listing of Twitter users' accounts you might enjoy following."
