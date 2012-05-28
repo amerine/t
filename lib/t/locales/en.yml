@@ -55,3 +55,8 @@ en:
       posted: "Sort by the time when Twitter account was posted."
       tweets: "Sort by number of Tweets."
       unsorted: "Output is not sorted."
+
+    dm:
+      desc: "Sends that person a Direct Message."
+      id: "Specify user via ID instead of screen name."
+      success: "Direct Message sent from @%{profile} to @%{recipient}."

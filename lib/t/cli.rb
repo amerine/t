@@ -224,8 +224,8 @@ module T
     end
     map %w(disciples) => :groupies
 
-    desc "dm USER MESSAGE", "Sends that person a Direct Message."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify user via ID instead of screen name."
+    desc "dm USER MESSAGE", I18n.t("tasks.dm.desc")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.dm.id")
     def dm(user, message)
       require 't/core_ext/string'
       user = if options['id']
@@ -234,7 +234,7 @@ module T
         user.strip_ats
       end
       direct_message = client.direct_message_create(user, message)
-      say "Direct Message sent from @#{@rcfile.active_profile[0]} to @#{direct_message.recipient.screen_name}."
+      say I18n.t("tasks.dm.success", :profile => @rcfile.active_profile[0], :recipient => direct_message.recipient.screen_name)
     end
     map %w(d m) => :dm
 
