@@ -97,3 +97,6 @@ en:
 
     friends:
       desc: "Returns the list of people who you follow and follow you back."
+
+    leaders:
+      desc: "Returns the list of people who you follow but don't follow you back."
