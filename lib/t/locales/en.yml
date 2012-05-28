@@ -162,3 +162,6 @@ en:
 
     suggest:
       desc: "Returns a listing of Twitter users' accounts you might enjoy following."
+
+    timeline:
+      desc: "Returns the %{default_num} most recent Tweets posted by a user."
