@@ -219,6 +219,35 @@ en:
     delete:
       desc: "Delete Tweets, Direct Messages, etc."
 
+      block:
+        desc: "Unblock users."
+        id: "Specify input as Twitter user IDs instead of screen names."
+        unblocked:
+          one: "@%{profile} unblocked 1 user."
+          other: "@%{profile} unblocked %{count} users."
+        block-instructions: "Run `%{command_name} block %{users}` to block."
+
+      dm:
+        desc: "Delete the last Direct Message sent."
+        confirm: "Are you sure you want to permanently delete the direct message to @%{recipient}: \"%{message_text}\"? [y/N]"
+        deleted: '@%{profile} deleted the direct message sent to @%{recipient}: "%{message_text}"'
+
+      favorite:
+        desc: "Delete favorites."
+        confirm: "Are you sure you want to remove @%{from_user}'s status: \"%{full_text}\" from your favorites? [y/N]"
+        deleted: "@%{profile} unfavorited @%{from_user}'s status: \"%{full_text}\""
+
+      list:
+        desc: "Delete a list."
+        id: "Specify list via ID instead of slug."
+        confirm: "Are you sure you want to permanently delete the list \"%{list_name}\"? [y/N]"
+        deleted: "@%{profile} deleted the list \"%{list_name}\"."
+
+      status:
+        desc: "Delete Tweets."
+        confirm: "Are you sure you want to permanently delete @%{from_user}'s status: \"%{full_text}\"? [y/N]"
+        deleted: "@%{profile} deleted the status: \"%{full_text}\""
+
     list:
       desc: "Do various things with lists."
 

@@ -4,8 +4,10 @@ require 'twitter'
 module T
   autoload :RCFile, 't/rcfile'
   autoload :Requestable, 't/requestable'
+  autoload :Translations, 't/translations'
   class Delete < Thor
     include T::Requestable
+    include T::Translations
 
     check_unknown_options!
 
@@ -14,8 +16,8 @@ module T
       @rcfile = RCFile.instance
     end
 
-    desc "block USER [USER...]", "Unblock users."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify input as Twitter user IDs instead of screen names."
+    desc "block USER [USER...]", I18n.t("tasks.delete.block.desc")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.delete.block.id")
     method_option "force", :aliases => "-f", :type => :boolean, :default => false
     def block(user, *users)
       users.unshift(user)
@@ -33,12 +35,14 @@ module T
         end
       end
       number = users.length
-      say "@#{@rcfile.active_profile[0]} unblocked #{number} #{number == 1 ? 'user' : 'users'}."
+      say I18n.t("tasks.delete.block.unblocked", :profile => @rcfile.active_profile[0], :count => number)
       say
-      say "Run `#{File.basename($0)} block #{users.map{|user| "@#{user.screen_name}"}.join(' ')}` to block."
+      say I18n.t("tasks.delete.block.block-instructions",
+                 :command_name => File.basename($0),
+                 :users => users.map{|user| "@#{user.screen_name}"}.join(' '))
     end
 
-    desc "dm [DIRECT_MESSAGE_ID] [DIRECT_MESSAGE_ID...]", "Delete the last Direct Message sent."
+    desc "dm [DIRECT_MESSAGE_ID] [DIRECT_MESSAGE_ID...]", I18n.t("tasks.delete.dm.desc")
     method_option "force", :aliases => "-f", :type => :boolean, :default => false
     def dm(direct_message_id, *direct_message_ids)
       direct_message_ids.unshift(direct_message_id)
@@ -47,15 +51,18 @@ module T
       direct_message_ids.each do |direct_message_id|
         unless options['force']
           direct_message = client.direct_message(direct_message_id)
-          return unless yes? "Are you sure you want to permanently delete the direct message to @#{direct_message.recipient.screen_name}: \"#{direct_message.text}\"? [y/N]"
+          return unless yes? I18n.t("tasks.delete.dm.confirm", :recipient => direct_message.recipient.screen_name, :message_text => direct_message.text)
         end
         direct_message = client.direct_message_destroy(direct_message_id)
-        say "@#{@rcfile.active_profile[0]} deleted the direct message sent to @#{direct_message.recipient.screen_name}: \"#{direct_message.text}\""
+        say I18n.t("tasks.delete.dm.deleted",
+                   :profile => @rcfile.active_profile[0],
+                   :recipient => direct_message.recipient.screen_name,
+                   :message_text => direct_message.text)
       end
     end
     map %w(d m) => :dm
 
-    desc "favorite STATUS_ID [STATUS_ID...]", "Delete favorites."
+    desc "favorite STATUS_ID [STATUS_ID...]", I18n.t("tasks.delete.favorite.desc")
     method_option "force", :aliases => "-f", :type => :boolean, :default => false
     def favorite(status_id, *status_ids)
       status_ids.unshift(status_id)
@@ -64,17 +71,22 @@ module T
       status_ids.each do |status_id|
         unless options['force']
           status = client.status(status_id, :include_my_retweet => false, :trim_user => true)
-          return unless yes? "Are you sure you want to remove @#{status.from_user}'s status: \"#{status.full_text}\" from your favorites? [y/N]"
+          return unless yes? I18n.t("tasks.delete.favorite.confirm",
+                                    :from_user => status.from_user,
+                                    :full_text => status.full_text)
         end
         status = client.unfavorite(status_id)
-        say "@#{@rcfile.active_profile[0]} unfavorited @#{status.from_user}'s status: \"#{status.full_text}\""
+        say I18n.t("tasks.delete.favorite.deleted",
+                   :profile => @rcfile.active_profile[0],
+                   :from_user => status.from_user,
+                   :full_text => status.full_text)
       end
     end
     map %w(fave favourite) => :favorite
 
-    desc "list LIST", "Delete a list."
+    desc "list LIST", I18n.t("tasks.delete.list.desc")
     method_option "force", :aliases => "-f", :type => :boolean, :default => false
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify list via ID instead of slug."
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.delete.list.id")
     def list(list)
       if options['id']
         require 't/core_ext/string'
@@ -82,13 +94,15 @@ module T
       end
       list = client.list(list)
       unless options['force']
-        return unless yes? "Are you sure you want to permanently delete the list \"#{list.name}\"? [y/N]"
+        return unless yes? I18n.t("tasks.delete.list.confirm", :list_name => list.name)
       end
       client.list_destroy(list)
-      say "@#{@rcfile.active_profile[0]} deleted the list \"#{list.name}\"."
+      say I18n.t("tasks.delete.list.deleted",
+                 :profile => @rcfile.active_profile[0],
+                 :list_name => list.name)
     end
 
-    desc "status STATUS_ID [STATUS_ID...]", "Delete Tweets."
+    desc "status STATUS_ID [STATUS_ID...]", I18n.t('tasks.delete.status.desc')
     method_option "force", :aliases => "-f", :type => :boolean, :default => false
     def status(status_id, *status_ids)
       status_ids.unshift(status_id)
@@ -97,10 +111,14 @@ module T
       status_ids.each do |status_id|
         unless options['force']
           status = client.status(status_id, :include_my_retweet => false, :trim_user => true)
-          return unless yes? "Are you sure you want to permanently delete @#{status.from_user}'s status: \"#{status.full_text}\"? [y/N]"
+          return unless yes? I18n.t("tasks.delete.status.confirm",
+                                    :from_user => status.from_user,
+                                    :full_text => status.full_text)
         end
         status = client.status_destroy(status_id, :trim_user => true)
-        say "@#{@rcfile.active_profile[0]} deleted the status: \"#{status.full_text}\""
+        say I18n.t("tasks.delete.status.deleted",
+                   :profile => @rcfile.active_profile[0],
+                   :full_text => status.full_text)
       end
     end
     map %w(post tweet update) => :status
