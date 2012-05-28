@@ -577,8 +577,8 @@ module T
       end
     end
 
-    desc "rate_limit", "Returns information related to Twitter API rate limiting."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
+    desc "rate_limit", I18n.t("tasks.rate_limit.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
     def rate_limit
       rate_limit_status = client.rate_limit_status
       if options['csv']

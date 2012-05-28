@@ -117,3 +117,6 @@ en:
       desc: "Opens that user's profile in a web browser."
       display-url: "Display the requested URL instead of attempting to open it."
       status: "Specify input as a Twitter status ID instead of a screen name."
+
+    rate_limit:
+      desc: "Returns information related to Twitter API rate limiting."
