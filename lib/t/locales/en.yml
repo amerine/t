@@ -185,3 +185,7 @@ en:
       desc: "Post a Tweet."
       posted: "Tweet posted by @%{profile}."
       delete-instructions: "Run `%{command_name} delete status %{status_id}` to delete."
+
+    users:
+      desc: "Returns a list of users you specify."
+      id: "Specify input as Twitter user IDs instead of screen names."

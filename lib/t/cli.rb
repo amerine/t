@@ -861,18 +861,18 @@ module T
     end
     map %w(post tweet) => :update
 
-    desc "users USER [USER...]", "Returns a list of users you specify."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "favorites", :aliases => "-v", :type => :boolean, :default => false, :desc => "Sort by number of favorites."
-    method_option "followers", :aliases => "-f", :type => :boolean, :default => false, :desc => "Sort by number of followers."
-    method_option "friends", :aliases => "-e", :type => :boolean, :default => false, :desc => "Sort by number of friends."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify input as Twitter user IDs instead of screen names."
-    method_option "listed", :aliases => "-d", :type => :boolean, :default => false, :desc => "Sort by number of list memberships."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
-    method_option "posted", :aliases => "-p", :type => :boolean, :default => false, :desc => "Sort by the time when Twitter account was posted."
-    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => "Reverse the order of the sort."
-    method_option "tweets", :aliases => "-t", :type => :boolean, :default => false, :desc => "Sort by number of Tweets."
-    method_option "unsorted", :aliases => "-u", :type => :boolean, :default => false, :desc => "Output is not sorted."
+    desc "users USER [USER...]", I18n.t("tasks.users.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "favorites", :aliases => "-v", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.favorites")
+    method_option "followers", :aliases => "-f", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.followers")
+    method_option "friends", :aliases => "-e", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.friends")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.users.id")
+    method_option "listed", :aliases => "-d", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.listed")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
+    method_option "posted", :aliases => "-p", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.posted") 
+    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.reverse")
+    method_option "tweets", :aliases => "-t", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.tweets")
+    method_option "unsorted", :aliases => "-u", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.unsorted")
     def users(user, *users)
       users.unshift(user)
       require 't/core_ext/string'
