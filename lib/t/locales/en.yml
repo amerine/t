@@ -15,6 +15,26 @@ en:
     source: "Source"
     url: "URL"
 
+  user_attrs:
+    id: "ID"
+    verified: "Verified"
+    name: "Name"
+    screen-name: "Screen name"
+    bio: "Bio"
+    location: "Location"
+    status: "Status"
+    following: "Following"
+    not-following: "Not following"
+    last-update: "Last update"
+    last-updated-at: "Lasted updated at"
+    since: "Since"
+    tweets: "Tweets"
+    favorites: "Favorites"
+    listed: "Listed"
+    following: "Following"
+    followers: "Followers"
+    url: "URL"
+
   tasks:
     common_options:
       csv: "Output in CSV format."
@@ -192,3 +212,6 @@ en:
 
     version:
       desc: "Show version."
+
+    whois:
+      desc: "Retrieves profile information for the user."

@@ -892,9 +892,9 @@ module T
     end
     map %w(-v --version) => :version
 
-    desc "whois USER", "Retrieves profile information for the user."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify user via ID instead of screen name."
+    desc "whois USER", I18n.t("tasks.whois.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.common_options.id")
     def whois(user)
       require 't/core_ext/string'
       user = if options['id']
@@ -907,23 +907,23 @@ module T
       if options['csv']
         require 'csv'
         require 'fastercsv' unless Array.new.respond_to?(:to_csv)
-        say ["ID", "Verified", "Name", "Screen name", "Bio", "Location", "Following", "Last update", "Lasted updated at", "Since", "Tweets", "Favorites", "Listed", "Following", "Followers", "URL"].to_csv
+        say I18n.t(["user_attrs.id", "user_attrs.verified", "user_attrs.name", "user_attrs.screen-name", "user_attrs.bio", "user_attrs.location", "user_attrs.following", "user_attrs.last-update", "user_attrs.last-updated-at", "user_attrs.since", "user_attrs.tweets", "user_attrs.favorites", "user_attrs.listed", "user_attrs.following", "user_attrs.followers", "user_attrs.url"]).to_csv
         say [user.id, user.verified?, user.name, user.screen_name, user.description, user.location, user.following?, HTMLEntities.new.decode(user.status.text), csv_formatted_time(user.status), csv_formatted_time(user), user.statuses_count, user.favourites_count, user.listed_count, user.friends_count, user.followers_count, user.url].to_csv
       else
         array = []
-        array << ["ID", user.id.to_s]
-        array << [user.verified ? "Name (Verified)" : "Name", user.name] unless user.name.nil?
-        array << ["Bio", user.description.gsub(/\n+/, ' ')] unless user.description.nil?
-        array << ["Location", user.location] unless user.location.nil?
-        array << ["Status", user.following ? "Following" : "Not following"]
-        array << ["Last update", "#{HTMLEntities.new.decode(user.status.text).gsub(/\n+/, ' ')} (#{time_ago_in_words(user.status.created_at)} ago)"] unless user.status.nil?
-        array << ["Since", "#{ls_formatted_time(user)} (#{time_ago_in_words(user.created_at)} ago)"]
-        array << ["Tweets", number_with_delimiter(user.statuses_count)]
-        array << ["Favorites", number_with_delimiter(user.favourites_count)]
-        array << ["Listed", number_with_delimiter(user.listed_count)]
-        array << ["Following", number_with_delimiter(user.friends_count)]
-        array << ["Followers", number_with_delimiter(user.followers_count)]
-        array << ["URL", user.url] unless user.url.nil?
+        array << [I18n.t("user_attrs.id"), user.id.to_s]
+        array << [user.verified ? "#{I18n.t("user_attrs.name")} (#{I18n.t("user_attrs.verified")})" : "#{I18n.t("user_attrs.name")}", user.name] unless user.name.nil?
+        array << [I18n.t("user_attrs.bio"), user.description.gsub(/\n+/, ' ')] unless user.description.nil?
+        array << [I18n.t("user_attrs.location"), user.location] unless user.location.nil?
+        array << [I18n.t("user_attrs.status"), user.following ? I18n.t("user_attrs.following") : I18n.t("user_attrs.not-following")]
+        array << [I18n.t("user_attrs.last-update"), "#{HTMLEntities.new.decode(user.status.text).gsub(/\n+/, ' ')} (#{time_ago_in_words(user.status.created_at)} ago)"] unless user.status.nil?
+        array << [I18n.t("user_attrs.since"), "#{ls_formatted_time(user)} (#{time_ago_in_words(user.created_at)} ago)"]
+        array << [I18n.t("user_attrs.tweets"), number_with_delimiter(user.statuses_count)]
+        array << [I18n.t("user_attrs.favorites"), number_with_delimiter(user.favourites_count)]
+        array << [I18n.t("user_attrs.listed"), number_with_delimiter(user.listed_count)]
+        array << [I18n.t("user_attrs.following"), number_with_delimiter(user.friends_count)]
+        array << [I18n.t("user_attrs.followers"), number_with_delimiter(user.followers_count)]
+        array << [I18n.t("user_attrs.url"), user.url] unless user.url.nil?
         print_table(array)
       end
     end
