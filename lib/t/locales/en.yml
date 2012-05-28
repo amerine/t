@@ -180,3 +180,8 @@ en:
         one: "@%{profile} is no longer following 1 user."
         other: "@%{profile} is no longer following %{count} users."
       follow-instructions: "Run `%{command_name} follow %{users}` to follow again."
+
+    update:
+      desc: "Post a Tweet."
+      posted: "Tweet posted by @%{profile}."
+      delete-instructions: "Run `%{command_name} delete status %{status_id}` to delete."

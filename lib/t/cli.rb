@@ -853,9 +853,11 @@ module T
       opts = {:trim_user => true}
       opts.merge!(:lat => location.lat, :long => location.lng) if options['location']
       status = client.update(message, opts)
-      say "Tweet posted by @#{@rcfile.active_profile[0]}."
+      say I18n.t("tasks.update.posted", :profile => @rcfile.active_profile[0])
       say
-      say "Run `#{File.basename($0)} delete status #{status.id}` to delete."
+      say I18n.t("tasks.update.delete-instructions",
+                 :command_name => File.basename($0),
+                 :status_id => status.id)
     end
     map %w(post tweet) => :update
 
