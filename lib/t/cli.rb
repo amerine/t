@@ -545,11 +545,11 @@ module T
       T::Stream.new.matrix
     end
 
-    desc "mentions", "Returns the #{DEFAULT_NUM_RESULTS} most recent Tweets mentioning you."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
-    method_option "number", :aliases => "-n", :type => :numeric, :default => DEFAULT_NUM_RESULTS, :desc => "Limit the number of results."
-    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => "Reverse the order of the sort."
+    desc "mentions", I18n.t("tasks.mentions.desc", :default_num => DEFAULT_NUM_RESULTS)
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
+    method_option "number", :aliases => "-n", :type => :numeric, :default => DEFAULT_NUM_RESULTS, :desc => I18n.t("tasks.common_options.number")
+    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.reverse")
     def mentions
       count = options['number'] || DEFAULT_NUM_RESULTS
       statuses = collect_with_count(count) do |opts|

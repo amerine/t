@@ -106,3 +106,6 @@ en:
       members: "Sort by number of members."
       mode: "Sort by mode."
       subscribers: "Sort by number of subscribers."
+
+    mentions:
+      desc: "Returns the %{default_num} most recent Tweets mentioning you."
