@@ -79,3 +79,11 @@ en:
 
     favorites:
       desc: "Returns the %{default_num} most recent Tweets you favorited."
+
+    follow:
+      desc: "Allows you to start following users."
+      id: "Specify input as Twitter user IDs instead of screen names."
+      followed:
+        one: "@%{profile} is now following 1 more user."
+        other: "@%{profile} is now following %{count} more users."
+      unfollow-instructions: "Run `%{command_name} unfollow %{users}` to stop."

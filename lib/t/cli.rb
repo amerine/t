@@ -342,8 +342,8 @@ module T
     end
     map %w(faves favourites) => :favorites
 
-    desc "follow USER [USER...]", "Allows you to start following users."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify input as Twitter user IDs instead of screen names."
+    desc "follow USER [USER...]", I18n.t("tasks.follow.desc")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.follow.id")
     def follow(user, *users)
       users.unshift(user)
       require 't/core_ext/string'
@@ -360,9 +360,11 @@ module T
         end
       end
       number = users.length
-      say "@#{@rcfile.active_profile[0]} is now following #{number} more #{number == 1 ? 'user' : 'users'}."
+      say I18n.t("tasks.follow.followed", :profile => @rcfile.active_profile[0], :count => number)
       say
-      say "Run `#{File.basename($0)} unfollow #{users.map{|user| "@#{user.screen_name}"}.join(' ')}` to stop."
+      say I18n.t("tasks.follow.unfollow-instructions",
+                 :command_name => File.basename($0),
+                 :users => users.map{|user| "@#{user.screen_name}"}.join(' '))
     end
 
     desc "followings [USER]", "Returns a list of the people you follow on Twitter."
