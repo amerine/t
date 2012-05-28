@@ -140,3 +140,6 @@ en:
         one: "@%{profile} retweeted 1 tweet."
         other: "@%{profile} retweeted %{count} tweet."
       delete-instructions: "Run `%{command_name} delete status %{retweets}` to undo."
+
+    retweets:
+      desc: "Returns the %{default_num} most recent Retweets by a user."
