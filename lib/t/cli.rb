@@ -1,5 +1,6 @@
 require 'thor'
 require 'twitter'
+require 'i18n'
 
 module T
   autoload :Authorizable, 't/authorizable'
@@ -25,6 +26,9 @@ module T
     MAX_USERS_PER_REQUEST = 100
     DIRECT_MESSAGE_HEADINGS = ["ID", "Posted at", "Screen name", "Text"]
     TREND_HEADINGS = ["WOEID", "Parent ID", "Type", "Name", "Country"]
+
+    I18n.load_path = Dir[File.expand_path(File.join("..", "locales", "*.yml"), __FILE__)]
+    I18n.locale = :en
 
     check_unknown_options!
 

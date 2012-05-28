@@ -28,6 +28,7 @@ Gem::Specification.new do |gem|
   gem.executables = %w(t)
   gem.files = %w(LICENSE.md README.md Rakefile t.gemspec)
   gem.files += Dir.glob("lib/**/*.rb")
+  gem.files += Dir.glob("lib/t/locales/*.yml")
   gem.files += Dir.glob("bin/**/*")
   gem.files += Dir.glob("spec/**/*")
   gem.homepage = 'http://sferik.github.com/t/'
