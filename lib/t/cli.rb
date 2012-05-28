@@ -515,16 +515,16 @@ module T
       print_users(users)
     end
 
-    desc "lists [USER]", "Returns the lists created by a user."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify user via ID instead of screen name."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
-    method_option "members", :aliases => "-m", :type => :boolean, :default => false, :desc => "Sort by number of members."
-    method_option "mode", :aliases => "-o", :type => :boolean, :default => false, :desc => "Sort by mode."
-    method_option "posted", :aliases => "-p", :type => :boolean, :default => false, :desc => "Sort by the time when Twitter list was posted."
-    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => "Reverse the order of the sort."
-    method_option "subscribers", :aliases => "-s", :type => :boolean, :default => false, :desc => "Sort by number of subscribers."
-    method_option "unsorted", :aliases => "-u", :type => :boolean, :default => false, :desc => "Output is not sorted."
+    desc "lists [USER]", I18n.t("tasks.lists.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.common_options.id")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
+    method_option "members", :aliases => "-m", :type => :boolean, :default => false, :desc => I18n.t("tasks.lists.members")
+    method_option "mode", :aliases => "-o", :type => :boolean, :default => false, :desc => I18n.t("tasks.lists.mode")
+    method_option "posted", :aliases => "-p", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.posted")
+    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.reverse")
+    method_option "subscribers", :aliases => "-s", :type => :boolean, :default => false, :desc => I18n.t("tasks.list.subscribers")
+    method_option "unsorted", :aliases => "-u", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.unsorted")
     def lists(user=nil)
       if user
         require 't/core_ext/string'

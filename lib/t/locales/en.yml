@@ -100,3 +100,9 @@ en:
 
     leaders:
       desc: "Returns the list of people who you follow but don't follow you back."
+
+    lists:
+      desc: "Returns the lists created by a user."
+      members: "Sort by number of members."
+      mode: "Sort by mode."
+      subscribers: "Sort by number of subscribers."
