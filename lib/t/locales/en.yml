@@ -91,3 +91,6 @@ en:
 
     followings:
       desc: "Returns a list of the people you follow on Twitter."
+
+    followers:
+      desc: "Returns a list of the people who follow you on Twitter."
