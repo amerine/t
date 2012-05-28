@@ -6,6 +6,12 @@ en:
     profile: "Path to RC file"
 
   tasks:
+    common_options:
+      csv: "Output in CSV format."
+      long: "Output in long format."
+      number: "Limit the number of results."
+      reverse: "Reverse the order of the sort."
+
     accounts:
       desc: "List accounts"
 
@@ -35,7 +41,6 @@ en:
 
     direct_messages:
       desc: "Returns the %{default_min} most recent Direct Messages sent to you."
-      csv: "Output in CSV format."
-      long: "Output in long format."
-      number: "Limit the number of results."
-      reverse: "Reverse the order of the sort."
+
+    direct_messages_sent:
+      desc: "Returns the %{default_min} most recent Direct Messages sent to you."
