@@ -1,0 +1,7 @@
+en:
+  options:
+    host: "Twitter API server"
+    no-color: "Disable colorization in output"
+    no-ssl: "Disable SSL"
+    profile: "Path to RC file"
+

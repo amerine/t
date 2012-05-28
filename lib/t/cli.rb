@@ -32,10 +32,11 @@ module T
 
     check_unknown_options!
 
-    option "host", :aliases => "-H", :type => :string, :default => DEFAULT_HOST, :desc => "Twitter API server"
-    option "no-color", :aliases => "-N", :type => :boolean, :desc => "Disable colorization in output"
-    option "no-ssl", :aliases => "-U", :type => :boolean, :default => false, :desc => "Disable SSL"
-    option "profile", :aliases => "-P", :type => :string, :default => File.join(File.expand_path("~"), RCFile::FILE_NAME), :desc => "Path to RC file", :banner => "FILE"
+    option "host", :aliases => "-H", :type => :string, :default => DEFAULT_HOST, :desc => I18n.t('options.host')
+    option "no-color", :aliases => "-N", :type => :boolean, :desc => I18n.t('options.no-color')
+    option "no-ssl", :aliases => "-U", :type => :boolean, :default => false, :desc => I18n.t('options.no-ssl')
+    option "profile", :aliases => "-P", :type => :string, :default => File.join(File.expand_path("~"), RCFile::FILE_NAME), :desc => I18n.t('options.profile')
+
 
     def initialize(*)
       super
