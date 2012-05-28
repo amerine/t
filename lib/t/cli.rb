@@ -690,8 +690,8 @@ module T
       say "----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|"
     end
 
-    desc "status STATUS_ID", "Retrieves detailed information about a Tweet."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
+    desc "status STATUS_ID", I18n.t("tasks.status.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
     def status(status_id)
       status = client.status(status_id.to_i, :include_my_retweet => false)
       location = if status.place
@@ -715,18 +715,18 @@ module T
       if options['csv']
         require 'csv'
         require 'fastercsv' unless Array.new.respond_to?(:to_csv)
-        say ["ID", "Text", "Screen name", "Posted at", "Location", "Retweets", "Source", "URL"].to_csv
+        say I18n.t(["status_attrs.id", "status_attrs.text", "status_attrs.screen-name", "status_attrs.posted-at", "status_attrs.location", "status_attrs.retweets", "status_attrs.source", "status_attrs.url"]).to_csv
         say [status.id, HTMLEntities.new.decode(status.full_text), status.from_user, csv_formatted_time(status), location, status.retweet_count, strip_tags(status.source), "https://twitter.com/#{status.from_user}/status/#{status.id}"].to_csv
       else
         array = []
-        array << ["ID", status.id.to_s]
-        array << ["Text", HTMLEntities.new.decode(status.full_text).gsub(/\n+/, ' ')]
-        array << ["Screen name", "@#{status.from_user}"]
-        array << ["Posted at", "#{ls_formatted_time(status)} (#{time_ago_in_words(status.created_at)} ago)"]
-        array << ["Location", location] unless location.nil?
-        array << ["Retweets", number_with_delimiter(status.retweet_count)]
-        array << ["Source", strip_tags(status.source)]
-        array << ["URL", "https://twitter.com/#{status.from_user}/status/#{status.id}"]
+        array << [I18n.t("status_attrs.id"), status.id.to_s]
+        array << [I18n.t("status_attrs.text"), HTMLEntities.new.decode(status.full_text).gsub(/\n+/, ' ')]
+        array << [I18n.t("status_attrs.screen-name"), "@#{status.from_user}"]
+        array << [I18n.t("status_attrs.posted-at"), "#{ls_formatted_time(status)} (#{time_ago_in_words(status.created_at)} ago)"]
+        array << [I18n.t("status_attrs.location"), location] unless location.nil?
+        array << [I18n.t("status_attrs.retweets"), number_with_delimiter(status.retweet_count)]
+        array << [I18n.t("status_attrs.source"), strip_tags(status.source)]
+        array << [I18n.t("status_attrs.url"), "https://twitter.com/#{status.from_user}/status/#{status.id}"]
         print_table(array)
       end
     end

@@ -5,6 +5,16 @@ en:
     no-ssl: "Disable SSL"
     profile: "Path to RC file"
 
+  status_attrs:
+    id: "ID"
+    text: "Text"
+    screen-name: "Screen name"
+    posted-at: "Posted at"
+    location: "Location"
+    retweets: "Retweets"
+    source: "Source"
+    url: "URL"
+
   tasks:
     common_options:
       csv: "Output in CSV format."
@@ -146,3 +156,6 @@ en:
 
     ruler:
       desc: "Prints a 140-character ruler"
+
+    status:
+      desc: "Retrieves detailed information about a Tweet."
