@@ -169,3 +169,6 @@ en:
     trends:
       desc: "Returns the top 10 trending topics."
       exclude-hashtags: "Remove all hashtags from the trends list."
+
+    trends_locations:
+      desc: "Returns the locations for which Twitter has trending topic information."
