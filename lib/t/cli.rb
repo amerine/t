@@ -785,8 +785,8 @@ module T
     end
     map %w(tl) => :timeline
 
-    desc "trends [WOEID]", "Returns the top 10 trending topics."
-    method_option "exclude-hashtags", :aliases => "-x", :type => "boolean", :default => false, :desc => "Remove all hashtags from the trends list."
+    desc "trends [WOEID]", I18n.t("tasks.trends.desc")
+    method_option "exclude-hashtags", :aliases => "-x", :type => "boolean", :default => false, :desc => I18n.t("tasks.trends.exclude-hashtags")
     def trends(woe_id=1)
       opts = {}
       opts.merge!(:exclude => "hashtags") if options['exclude-hashtags']

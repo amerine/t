@@ -165,3 +165,7 @@ en:
 
     timeline:
       desc: "Returns the %{default_num} most recent Tweets posted by a user."
+
+    trends:
+      desc: "Returns the top 10 trending topics."
+      exclude-hashtags: "Remove all hashtags from the trends list."
