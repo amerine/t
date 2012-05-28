@@ -44,3 +44,14 @@ en:
 
     direct_messages_sent:
       desc: "Returns the %{default_min} most recent Direct Messages sent to you."
+
+    groupies:
+      desc: "Returns the list of people who follow you but you don't follow back."
+      favorites: "Sort by number of favorites."
+      followers: "Sort by number of followers."
+      friends: "Sort by number of friends."
+      id: "Specify user via ID instead of screen name."
+      listed: "Sort by number of list memberships."
+      posted: "Sort by the time when Twitter account was posted."
+      tweets: "Sort by number of Tweets."
+      unsorted: "Output is not sorted."
