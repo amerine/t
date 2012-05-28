@@ -11,6 +11,7 @@ en:
       long: "Output in long format."
       number: "Limit the number of results."
       reverse: "Reverse the order of the sort."
+      id: "Specify user via ID instead of screen name."
 
     accounts:
       desc: "List accounts"
@@ -50,7 +51,6 @@ en:
       favorites: "Sort by number of favorites."
       followers: "Sort by number of followers."
       friends: "Sort by number of friends."
-      id: "Specify user via ID instead of screen name."
       listed: "Sort by number of list memberships."
       posted: "Sort by the time when Twitter account was posted."
       tweets: "Sort by number of Tweets."
@@ -58,5 +58,9 @@ en:
 
     dm:
       desc: "Sends that person a Direct Message."
-      id: "Specify user via ID instead of screen name."
       success: "Direct Message sent from @%{profile} to @%{recipient}."
+
+    does_contain:
+      desc: "Find out whether a list contains a user."
+      list-member-true: "Yes, @%{owner}/%{list} contains @%{user}."
+      list-member-false: "No, @%{owner}/%{list} does not contain @%{user}."

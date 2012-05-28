@@ -189,7 +189,7 @@ module T
     method_option "favorites", :aliases => "-v", :type => :boolean, :default => false, :desc => I18n.t('tasks.groupies.favorites')
     method_option "followers", :aliases => "-f", :type => :boolean, :default => false, :desc => I18n.t('tasks.groupies.followers')
     method_option "friends", :aliases => "-e", :type => :boolean, :default => false, :desc => I18n.t('tasks.groupies.friends')
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t('tasks.groupies.id')
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t('tasks.common_options.id')
     method_option "listed", :aliases => "-d", :type => :boolean, :default => false, :desc => I18n.t('tasks.groupies.listed')
     method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t('tasks.common_options.long')
     method_option "posted", :aliases => "-p", :type => :boolean, :default => false, :desc => I18n.t('tasks.groupies.posted')
@@ -225,7 +225,7 @@ module T
     map %w(disciples) => :groupies
 
     desc "dm USER MESSAGE", I18n.t("tasks.dm.desc")
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.dm.id")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.common_options.id")
     def dm(user, message)
       require 't/core_ext/string'
       user = if options['id']
@@ -238,8 +238,8 @@ module T
     end
     map %w(d m) => :dm
 
-    desc "does_contain [USER/]LIST USER", "Find out whether a list contains a user."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify user via ID instead of screen name."
+    desc "does_contain [USER/]LIST USER", I18n.t("tasks.does_contain.desc")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.common_options.id")
     def does_contain(list, user=nil)
       owner, list = list.split('/')
       if list.nil?
@@ -264,9 +264,9 @@ module T
         end
       end
       if client.list_member?(owner, list, user)
-        say "Yes, @#{owner}/#{list} contains @#{user}."
+        say I18n.t("tasks.does_contain.list-member-true", :owner => owner, :list => list, :user => user)
       else
-        say "No, @#{owner}/#{list} does not contain @#{user}."
+        say I18n.t("tasks.does_contain.list-member-false", :owner => owner, :list => list, :user => user)
         exit 1
       end
     end
