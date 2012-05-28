@@ -107,5 +107,8 @@ en:
       mode: "Sort by mode."
       subscribers: "Sort by number of subscribers."
 
+    matrix:
+      desc: "Unfortunately, no one can be told what the Matrix is. You have to see it for yourself."
+
     mentions:
       desc: "Returns the %{default_num} most recent Tweets mentioning you."

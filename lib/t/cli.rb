@@ -540,7 +540,7 @@ module T
       print_lists(lists)
     end
 
-    desc "matrix", "Unfortunately, no one can be told what the Matrix is. You have to see it for yourself."
+    desc "matrix", I18n.t("tasks.matrix.desc")
     def matrix
       T::Stream.new.matrix
     end
