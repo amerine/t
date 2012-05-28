@@ -93,8 +93,8 @@ module T
       say I18n.t("tasks.authorize.success")
     end
 
-    desc "block USER [USER...]", "Block users."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify input as Twitter user IDs instead of screen names."
+    desc "block USER [USER...]", I18n.t("tasks.block.desc")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t('tasks.block.id')
     def block(user, *users)
       users.unshift(user)
       require 't/core_ext/string'
@@ -111,9 +111,11 @@ module T
         end
       end
       number = users.length
-      say "@#{@rcfile.active_profile[0]} blocked #{number} #{number == 1 ? 'user' : 'users'}."
+      say I18n.t("tasks.block.blocked", :username => @rcfile.active_profile[0], :count => number  )
       say
-      say "Run `#{File.basename($0)} delete block #{users.map{|user| "@#{user.screen_name}"}.join(' ')}` to unblock."
+      say I18n.t("tasks.block.unblock_instructions",
+                 :command_name => File.basename($0),
+                 :users_list   => users.map{|user| "@#{user.screen_name}"}.join(' '))
     end
 
     desc "direct_messages", "Returns the #{DEFAULT_NUM_RESULTS} most recent Direct Messages sent to you."

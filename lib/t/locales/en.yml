@@ -24,3 +24,11 @@ en:
         line7: 'Press [Enter] to open the Twitter app authorization page.'
       pin: "Paste in the supplied PIN:"
       success: "Authorization successful."
+
+    block:
+      desc: "Block users."
+      id: "Specify input as Twitter user IDs instead of screen names."
+      blocked:
+        one: "@%{username} blocked 1 user."
+        other: "@%{username} %{count} users."
+      unblock-instructions: "Run `%{command_name} delete block %{users_list}` to unblock."
