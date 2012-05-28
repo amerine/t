@@ -189,3 +189,6 @@ en:
     users:
       desc: "Returns a list of users you specify."
       id: "Specify input as Twitter user IDs instead of screen names."
+
+    version:
+      desc: "Show version."

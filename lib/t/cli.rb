@@ -886,7 +886,7 @@ module T
     end
     map %w(stats) => :users
 
-    desc "version", "Show version."
+    desc "version", I18n.t("tasks.version.desc")
     def version
       say T::Version
     end
