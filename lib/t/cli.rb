@@ -559,10 +559,10 @@ module T
     end
     map %w(replies) => :mentions
 
-    desc "open USER", "Opens that user's profile in a web browser."
-    method_option "display-url", :aliases => "-d", :type => :boolean, :default => false, :desc => "Display the requested URL instead of attempting to open it."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify user via ID instead of screen name."
-    method_option "status", :aliases => "-s", :type => :boolean, :default => false, :desc => "Specify input as a Twitter status ID instead of a screen name."
+    desc "open USER", I18n.t("tasks.open.desc")
+    method_option "display-url", :aliases => "-d", :type => :boolean, :default => false, :desc => I18n.t("tasks.open.display-url")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.common_options.id")
+    method_option "status", :aliases => "-s", :type => :boolean, :default => false, :desc => I18n.t("tasks.open.status")
     def open(user)
       require 'launchy'
       if options['id']

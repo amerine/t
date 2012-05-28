@@ -112,3 +112,8 @@ en:
 
     mentions:
       desc: "Returns the %{default_num} most recent Tweets mentioning you."
+
+    open:
+      desc: "Opens that user's profile in a web browser."
+      display-url: "Display the requested URL instead of attempting to open it."
+      status: "Specify input as a Twitter status ID instead of a screen name."
