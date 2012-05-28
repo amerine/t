@@ -41,10 +41,10 @@ en:
       unblock-instructions: "Run `%{command_name} delete block %{users_list}` to unblock."
 
     direct_messages:
-      desc: "Returns the %{default_min} most recent Direct Messages sent to you."
+      desc: "Returns the %{default_num} most recent Direct Messages sent to you."
 
     direct_messages_sent:
-      desc: "Returns the %{default_min} most recent Direct Messages sent to you."
+      desc: "Returns the %{default_num} most recent Direct Messages sent to you."
 
     groupies:
       desc: "Returns the list of people who follow you but you don't follow back."
@@ -76,3 +76,6 @@ en:
         one: "@%{profile} favorited 1 tweet."
         other: "@%{prifle} favorited #{count} tweets."
       delete-favorite-instructions: "Run `%{command_name} delete favorite %{status_ids}` to unfavorite."
+
+    favorites:
+      desc: "Returns the %{default_num} most recent Tweets you favorited."
