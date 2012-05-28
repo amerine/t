@@ -143,3 +143,6 @@ en:
 
     retweets:
       desc: "Returns the %{default_num} most recent Retweets by a user."
+
+    ruler:
+      desc: "Prints a 140-character ruler"

@@ -685,7 +685,7 @@ module T
     end
     map %w(rts) => :retweets
 
-    desc "ruler", "Prints a 140-character ruler"
+    desc "ruler", I18n.t("tasks.ruler.desc")
     def ruler
       say "----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|"
     end
