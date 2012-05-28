@@ -120,3 +120,9 @@ en:
 
     rate_limit:
       desc: "Returns information related to Twitter API rate limiting."
+
+    reply:
+      desc: "Post your Tweet as a reply directed at another person."
+      all: "Reply to all users mentioned in the Tweet."
+      posted: "Reply posted by @%{profile} to %{users}."
+      delete-instructions: "Run `%{command_name} delete status %{reply_id}` to delete."

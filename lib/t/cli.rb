@@ -596,8 +596,8 @@ module T
     end
     map %w(ratelimit rl) => :rate_limit
 
-    desc "reply STATUS_ID MESSAGE", "Post your Tweet as a reply directed at another person."
-    method_option "all", :aliases => "-a", :type => "boolean", :default => false, :desc => "Reply to all users mentioned in the Tweet."
+    desc "reply STATUS_ID MESSAGE", I18n.t("tasks.reply.desc")
+    method_option "all", :aliases => "-a", :type => "boolean", :default => false, :desc => I18n.t("tasks.reply.all")
     method_option "location", :aliases => "-l", :type => :boolean, :default => false
     def reply(status_id, message)
       status = client.status(status_id.to_i, :include_my_retweet => false)
@@ -615,9 +615,9 @@ module T
       opts = {:in_reply_to_status_id => status.id, :trim_user => true}
       opts.merge!(:lat => location.lat, :long => location.lng) if options['location']
       reply = client.update("#{users.join(' ')} #{message}", opts)
-      say "Reply posted by @#{@rcfile.active_profile[0]} to #{users.join(' ')}."
+      say I18n.t("tasks.reply.posted", :profile => @rcfile.active_profile[0], :users => users.join(' '))
       say
-      say "Run `#{File.basename($0)} delete status #{reply.id}` to delete."
+      say I18n.t("tasks.reply.delete-instructions", :command_name => File.basename($0), :reply_id => reply.id)
     end
 
     desc "report_spam USER [USER...]", "Report users for spam."
