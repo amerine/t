@@ -822,8 +822,8 @@ module T
     end
     map %w(locations trendlocations) => :trend_locations
 
-    desc "unfollow USER [USER...]", "Allows you to stop following users."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify input as Twitter user IDs instead of screen names."
+    desc "unfollow USER [USER...]", I18n.t("tasks.unfollow.desc")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.unfollow.id")
     def unfollow(user, *users)
       users.unshift(user)
       require 't/core_ext/string'
@@ -840,9 +840,11 @@ module T
         end
       end
       number = users.length
-      say "@#{@rcfile.active_profile[0]} is no longer following #{number} #{number == 1 ? 'user' : 'users'}."
+      say I18n.t("tasks.unfollow.unfollowed", :profile => @rcfile.active_profile[0], :count => number)
       say
-      say "Run `#{File.basename($0)} follow #{users.map{|user| "@#{user.screen_name}"}.join(' ')}` to follow again."
+      say I18n.t("tasks.unfollow.follow-instructions",
+                 :command_name => File.basename($0),
+                 :users => users.map{|user| "@#{user.screen_name}"}.join(' '))
     end
 
     desc "update MESSAGE", "Post a Tweet."

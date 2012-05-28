@@ -172,3 +172,11 @@ en:
 
     trends_locations:
       desc: "Returns the locations for which Twitter has trending topic information."
+
+    unfollow:
+      desc: "Allows you to stop following users."
+      id: "Specify input as Twitter user IDs instead of screen names."
+      unfollowed:
+        one: "@%{profile} is no longer following 1 user."
+        other: "@%{profile} is no longer following %{count} users."
+      follow-instructions: "Run `%{command_name} follow %{users}` to follow again."
