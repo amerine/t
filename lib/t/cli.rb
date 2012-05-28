@@ -43,7 +43,7 @@ module T
       @rcfile = RCFile.instance
     end
 
-    desc "accounts", "List accounts"
+    desc "accounts", I18n.t("tasks.accounts.desc")
     def accounts
       @rcfile.path = options['profile'] if options['profile']
       @rcfile.profiles.each do |profile|

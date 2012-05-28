@@ -5,3 +5,6 @@ en:
     no-ssl: "Disable SSL"
     profile: "Path to RC file"
 
+  tasks:
+    accounts:
+      desc: "List accounts"
