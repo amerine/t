@@ -620,8 +620,8 @@ module T
       say I18n.t("tasks.reply.delete-instructions", :command_name => File.basename($0), :reply_id => reply.id)
     end
 
-    desc "report_spam USER [USER...]", "Report users for spam."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify input as Twitter user IDs instead of screen names."
+    desc "report_spam USER [USER...]", I18n.t("tasks.report_spam.desc")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.report_spam.id")
     def report_spam(user, *users)
       users.unshift(user)
       require 't/core_ext/string'
@@ -638,7 +638,7 @@ module T
         end
       end
       number = users.length
-      say "@#{@rcfile.active_profile[0]} reported #{number} #{number == 1 ? 'user' : 'users'}."
+      say I18n.t("tasks.report_spam.reported", :profile => @rcfile.active_profile[0], :count => number)
     end
     map %w(report reportspam spam) => :report_spam
 

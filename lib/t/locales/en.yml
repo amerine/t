@@ -126,3 +126,10 @@ en:
       all: "Reply to all users mentioned in the Tweet."
       posted: "Reply posted by @%{profile} to %{users}."
       delete-instructions: "Run `%{command_name} delete status %{reply_id}` to delete."
+
+    report_spam:
+      desc: "Report users for spam."
+      id: "Specify input as Twitter user IDs instead of screen names."
+      reported:
+        one: "@%{profile} reported 1 user."
+        other: "@%{profile} reported %{count} users."
