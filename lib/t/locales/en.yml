@@ -8,3 +8,19 @@ en:
   tasks:
     accounts:
       desc: "List accounts"
+
+    authorize:
+      desc: "Allows an application to request user authorization"
+      consumer-key: "This can be found at https://dev.twitter.com/apps"
+      consumer-secret: "This can be found at https://dev.twitter.com/apps"
+      display-uri: 'Display the authorization URL instead of attempting to open it.'
+      prompt:
+        line1: 'In a moment, you will be directed to the Twitter app authorization page.'
+        line2: 'Perform the following steps to complete the authorization process:'
+        line3: '  1. Sign in to Twitter'
+        line4: '  2. Press "Authorize app"'
+        line5: '  3. Copy or memorize the supplied PIN'
+        line6: '  4. Return to the terminal to enter the PIN'
+        line7: 'Press [Enter] to open the Twitter app authorization page.'
+      pin: "Paste in the supplied PIN:"
+      success: "Authorization successful."

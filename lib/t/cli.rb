@@ -54,28 +54,28 @@ module T
       end
     end
 
-    desc "authorize", "Allows an application to request user authorization"
-    method_option "consumer-key", :aliases => "-c", :required => true, :desc => "This can be found at https://dev.twitter.com/apps", :banner => "KEY"
-    method_option "consumer-secret", :aliases => "-s", :required => true, :desc => "This can be found at https://dev.twitter.com/apps", :banner => "SECRET"
-    method_option "display-url", :aliases => "-d", :type => :boolean, :default => false, :desc => "Display the authorization URL instead of attempting to open it."
+    desc "authorize", I18n.t("tasks.authorize.desc")
+    method_option "consumer-key", :aliases => "-c", :required => true, :desc => I18n.t('tasks.authorize.consumer-key'), :banner => "KEY"
+    method_option "consumer-secret", :aliases => "-s", :required => true, :desc => I18n.t('tasks.authorize.consumer-secret'), :banner => "SECRET"
+    method_option "display-url", :aliases => "-d", :type => :boolean, :default => false, :desc => I18n.t('tasks.authorize.display-uri')
     method_option "prompt", :aliases => "-p", :type => :boolean, :default => true
     def authorize
       request_token = consumer.get_request_token
       url = generate_authorize_url(request_token)
       if options['prompt']
-        say "In a moment, you will be directed to the Twitter app authorization page."
-        say "Perform the following steps to complete the authorization process:"
-        say "  1. Sign in to Twitter"
-        say "  2. Press \"Authorize app\""
-        say "  3. Copy or memorize the supplied PIN"
-        say "  4. Return to the terminal to enter the PIN"
+        say I18n.t('tasks.authorize.prompt.line1')
+        say I18n.t('tasks.authorize.prompt.line2')
+        say I18n.t('tasks.authorize.prompt.line3')
+        say I18n.t('tasks.authorize.prompt.line4')
+        say I18n.t('tasks.authorize.prompt.line5')
+        say I18n.t('tasks.authorize.prompt.line6')
         say
-        ask "Press [Enter] to open the Twitter app authorization page."
+        ask I18n.t('tasks.authorize.prompt.line7')
         say
       end
       require 'launchy'
       Launchy.open(url, :dry_run => options['display-url'])
-      pin = ask "Paste in the supplied PIN:"
+      pin = ask I18n.t("tasks.authorize.pin")
       access_token = request_token.get_access_token(:oauth_verifier => pin.chomp)
       oauth_response = access_token.get('/1/account/verify_credentials.json')
       screen_name = oauth_response.body.match(/"screen_name"\s*:\s*"(.*?)"/).captures.first
@@ -90,7 +90,7 @@ module T
         }
       }
       @rcfile.active_profile = {'username' => screen_name, 'consumer_key' => options['consumer-key']}
-      say "Authorization successful."
+      say I18n.t("tasks.authorize.success")
     end
 
     desc "block USER [USER...]", "Block users."
