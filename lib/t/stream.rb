@@ -5,8 +5,10 @@ module T
   autoload :Printable, 't/printable'
   autoload :RCFile, 't/rcfile'
   autoload :Search, 't/search'
+  autoload :Translations, "t/translations"
   class Stream < Thor
     include T::Printable
+    include T::Translations
 
     STATUS_HEADINGS_FORMATTING = [
       "%-18s",  # Add padding to maximum length of a Tweet ID
@@ -20,9 +22,9 @@ module T
       @rcfile = RCFile.instance
     end
 
-    desc "all", "Stream a random sample of all Tweets (Control-C to stop)"
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
+    desc "all", I18n.t("tasks.stream.all.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
     def all
       require 'tweetstream'
       client.on_inited do
@@ -52,7 +54,7 @@ module T
       client.sample
     end
 
-    desc "matrix", "Unfortunately, no one can be told what the Matrix is. You have to see it for yourself."
+    desc "matrix", I18n.t("tasks.matrix.desc")
     def matrix
       require 'tweetstream'
       client.on_timeline_status do |status|
@@ -61,9 +63,9 @@ module T
       client.sample
     end
 
-    desc "search KEYWORD [KEYWORD...]", "Stream Tweets that contain specified keywords, joined with logical ORs (Control-C to stop)"
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
+    desc "search KEYWORD [KEYWORD...]", I18n.t("tasks.stream.search.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
     def search(keyword, *keywords)
       keywords.unshift(keyword)
       require 'tweetstream'
@@ -89,9 +91,9 @@ module T
       client.track(keywords)
     end
 
-    desc "timeline", "Stream your timeline (Control-C to stop)"
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
+    desc "timeline", I18n.t("tasks.stream.timeline.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
     def timeline
       require 'tweetstream'
       client.on_inited do
@@ -116,9 +118,9 @@ module T
       client.userstream
     end
 
-    desc "users USER_ID [USER_ID...]", "Stream Tweets either from or in reply to specified users (Control-C to stop)"
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
+    desc "users USER_ID [USER_ID...]", I18n.t("tasks.stream.users.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
     def users(user_id, *user_ids)
       user_ids.unshift(user_id)
       user_ids.map!(&:to_i)

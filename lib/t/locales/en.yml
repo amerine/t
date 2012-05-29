@@ -349,3 +349,15 @@ en:
 
     stream:
       desc: "Commands for streaming Tweets."
+
+      all:
+        desc: "Stream a random sample of all Tweets (Control-C to stop)"
+
+      search:
+        desc: "Stream Tweets that contain specified keywords, joined with logical ORs (Control-C to stop)"
+
+      timeline:
+        desc: "Stream your timeline (Control-C to stop)"
+
+      users:
+        desc: "Stream Tweets either from or in reply to specified users (Control-C to stop)"
