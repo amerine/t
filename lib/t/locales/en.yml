@@ -323,5 +323,29 @@ en:
     set:
       desc: "Change various account settings."
 
+      active:
+        desc: "Set your active account."
+        success: "Active account has been updated."
+
+      bio:
+        desc: "Edits your Bio information on your Twitter profile."
+        success: "@%{profile}'s bio has been updated."
+
+      language:
+        desc: "Selects the language you'd like to receive notifications in."
+        success: "@%{profile}'s language has been updated."
+
+      location:
+        desc: "Updates the location field in your profile."
+        success: "@%{profile}'s location has been updated."
+
+      name:
+        desc: "Sets the name field on your Twitter profile."
+        success: "@%{profile}'s name has been updated."
+
+      url:
+        desc: "Sets the URL field on your profile."
+        success: "@%{profile}'s URL has been updated."
+
     stream:
       desc: "Commands for streaming Tweets."
