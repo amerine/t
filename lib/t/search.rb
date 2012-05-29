@@ -6,10 +6,12 @@ module T
   autoload :Printable, 't/printable'
   autoload :RCFile, 't/rcfile'
   autoload :Requestable, 't/requestable'
+  autoload :Translations, 't/translations'
   class Search < Thor
     include T::Collectable
     include T::Printable
     include T::Requestable
+    include T::Translations
 
     DEFAULT_NUM_RESULTS = 20
     MAX_NUM_RESULTS = 200
@@ -22,9 +24,9 @@ module T
       @rcfile = RCFile.instance
     end
 
-    desc "all QUERY", "Returns the #{DEFAULT_NUM_RESULTS} most recent Tweets that match the specified query."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
+    desc "all QUERY", I18n.t("tasks.search.all.desc", :default_num => DEFAULT_NUM_RESULTS)
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
     method_option "number", :aliases => "-n", :type => :numeric, :default => DEFAULT_NUM_RESULTS
     def all(query)
       rpp = options['number'] || DEFAULT_NUM_RESULTS
@@ -53,9 +55,9 @@ module T
       end
     end
 
-    desc "favorites QUERY", "Returns Tweets you've favorited that match the specified query."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
+    desc "favorites QUERY", I18n.t("tasks.search.favorites.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
     def favorites(query)
       opts = {:count => MAX_NUM_RESULTS}
       statuses = collect_with_max_id do |max_id|
@@ -69,10 +71,10 @@ module T
     end
     map %w(faves) => :favorites
 
-    desc "list [USER/]LIST QUERY", "Returns Tweets on a list that match specified query."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify user via ID instead of screen name."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
+    desc "list [USER/]LIST QUERY", I18n.t("tasks.search.list.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.common_options.id")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc =>  I18n.t("tasks.common_options.long")
     def list(list, query)
       owner, list = list.split('/')
       if list.nil?
@@ -97,9 +99,9 @@ module T
       print_statuses(statuses)
     end
 
-    desc "mentions QUERY", "Returns Tweets mentioning you that match the specified query."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
+    desc "mentions QUERY", I18n.t("tasks.search.mentions.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
     def mentions(query)
       opts = {:count => MAX_NUM_RESULTS}
       statuses = collect_with_max_id do |max_id|
@@ -113,9 +115,9 @@ module T
     end
     map %w(replies) => :mentions
 
-    desc "retweets QUERY", "Returns Tweets you've retweeted that match the specified query."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
+    desc "retweets QUERY", I18n.t("tasks.search.retweets.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
     def retweets(query)
       opts = {:count => MAX_NUM_RESULTS}
       statuses = collect_with_max_id do |max_id|
@@ -129,10 +131,10 @@ module T
     end
     map %w(rts) => :retweets
 
-    desc "timeline [USER] QUERY", "Returns Tweets in your timeline that match the specified query."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify user via ID instead of screen name."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
+    desc "timeline [USER] QUERY", I18n.t("tasks.search.timeline.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.common_options.id")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
     def timeline(*args)
       opts = {:count => MAX_NUM_RESULTS}
       query = args.pop
@@ -161,17 +163,17 @@ module T
     end
     map %w(tl) => :timeline
 
-    desc "users QUERY", "Returns users that match the specified query."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "favorites", :aliases => "-v", :type => :boolean, :default => false, :desc => "Sort by number of favorites."
-    method_option "followers", :aliases => "-f", :type => :boolean, :default => false, :desc => "Sort by number of followers."
-    method_option "friends", :aliases => "-e", :type => :boolean, :default => false, :desc => "Sort by number of friends."
-    method_option "listed", :aliases => "-d", :type => :boolean, :default => false, :desc => "Sort by number of list memberships."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
-    method_option "posted", :aliases => "-p", :type => :boolean, :default => false, :desc => "Sort by the time when Twitter account was posted."
-    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => "Reverse the order of the sort."
-    method_option "tweets", :aliases => "-t", :type => :boolean, :default => false, :desc => "Sort by number of Tweets."
-    method_option "unsorted", :aliases => "-u", :type => :boolean, :default => false, :desc => "Output is not sorted."
+    desc "users QUERY", I18n.t("tasks.search.users.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "favorites", :aliases => "-v", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.favorites")
+    method_option "followers", :aliases => "-f", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.followers")
+    method_option "friends", :aliases => "-e", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.friends")
+    method_option "listed", :aliases => "-d", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.listed")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
+    method_option "posted", :aliases => "-p", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.posted")
+    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.reverse")
+    method_option "tweets", :aliases => "-t", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.tweets")
+    method_option "unsorted", :aliases => "-u", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.unsorted")
     def users(query)
       require 't/core_ext/enumerable'
       require 'retryable'

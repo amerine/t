@@ -299,6 +299,27 @@ en:
     search:
       desc: "Search through Tweets."
 
+      all:
+        desc: "Returns the %{default_num} most recent Tweets that match the specified query."
+
+      favorites:
+        desc: "Returns Tweets you've favorited that match the specified query."
+
+      list:
+        desc: "Returns Tweets on a list that match specified query."
+
+      mentions:
+        desc: "Returns Tweets mentioning you that match the specified query."
+
+      retweets:
+        desc: "Returns Tweets you've retweeted that match the specified query."
+
+      timeline:
+        desc: "Returns Tweets in your timeline that match the specified query."
+
+      users:
+        desc: "Returns users that match the specified query."
+
     set:
       desc: "Change various account settings."
 
