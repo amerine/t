@@ -35,6 +35,20 @@ en:
     followers: "Followers"
     url: "URL"
 
+  list_attrs:
+    id: "ID"
+    description: "Description"
+    slug: "Slug"
+    screen-name: "Screen name"
+    created-at: "Created at"
+    members: "Members"
+    subscribers: "Subscribers"
+    following: "Following"
+    not-following: "Not following"
+    status: "Status"
+    mode: "Mode"
+    url: "URL"
+
   tasks:
     common_options:
       csv: "Output in CSV format."
@@ -250,6 +264,37 @@ en:
 
     list:
       desc: "Do various things with lists."
+
+      add:
+        desc: "Add members to a list."
+        id: "Specify input as Twitter user IDs instead of screen names."
+        added:
+          one: "@%{profile} added 1 member to the list \"%{list}\"."
+          other: "@%{profile} added %{count} members to the list \"%{list}\"."
+        remove-instructions-id: "Run `%{command_name} list remove --id %{list} %{users}` to undo."
+        remove-instructions: "Run `%{command_name} list remove %{list} %{users}` to undo."
+
+      create:
+        desc: "Create a new list."
+        success: "@%{profile} created the list \"%{list}\"."
+
+      information:
+        desc: "Retrieves detailed information about a Twitter list."
+
+      members:
+        desc: "Returns the members of a Twitter list."
+
+      remove:
+        desc: "Remove members from a list."
+        id: "Specify input as Twitter user IDs instead of screen names."
+        success:
+          one: "@%{profile} removed 1 member from the list \"%{list}\"."
+          other: "@%{profile} removed %{count} members from the list \"%{list}\"."
+        add-instructions-id: "Run `%{command_name} list add --id %{list} %{users}` to undo."
+        add-instructions: "Run `%{command_name} list add %{list} %{users}` to undo."
+
+      timeline:
+        desc: "Show tweet timeline for members of the specified list."
 
     search:
       desc: "Search through Tweets."

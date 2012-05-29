@@ -7,11 +7,13 @@ module T
   autoload :Printable, 't/printable'
   autoload :RCFile, 't/rcfile'
   autoload :Requestable, 't/requestable'
+  autoload :Translations, 't/translations'
   class List < Thor
     include T::Collectable
     include T::Printable
     include T::Requestable
     include T::FormatHelpers
+    include T::Translations
 
     DEFAULT_NUM_RESULTS = 20
     MAX_USERS_PER_LIST = 500
@@ -24,8 +26,8 @@ module T
       @rcfile = RCFile.instance
     end
 
-    desc "add LIST USER [USER...]", "Add members to a list."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify input as Twitter user IDs instead of screen names."
+    desc "add LIST USER [USER...]", I18n.t("tasks.list.add.desc")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.list.add.id")
     def add(list, user, *users)
       users.unshift(user)
       require 't/core_ext/string'
@@ -43,26 +45,34 @@ module T
         end
       end
       number = users.length
-      say "@#{@rcfile.active_profile[0]} added #{number} #{number == 1 ? 'member' : 'members'} to the list \"#{list}\"."
+      say I18n.t("tasks.list.add.added", :count => number, :profile => @rcfile.active_profile[0], :list => list)
       say
       if options['id']
-        say "Run `#{File.basename($0)} list remove --id #{list} #{users.join(' ')}` to undo."
+        say I18n.t("tasks.list.add.remove-instructions-id",
+                   :command_name => File.basename($0),
+                   :list => list,
+                   :users => users.join(' '))
       else
-        say "Run `#{File.basename($0)} list remove #{list} #{users.map{|user| "@#{user}"}.join(' ')}` to undo."
+        say I18n.t("tasks.list.add.removed-instructions",
+                   :command_name => File.basename($0),
+                   :list => list,
+                   :users => users.map{|user| "@#{user}"}.join(' '))
       end
     end
 
-    desc "create LIST [DESCRIPTION]", "Create a new list."
+    desc "create LIST [DESCRIPTION]", I18n.t("tasks.list.create.desc")
     method_option "private", :aliases => "-p", :type => :boolean
     def create(list, description=nil)
       opts = description ? {:description => description} : {}
       opts.merge!(:mode => 'private') if options['private']
       client.list_create(list, opts)
-      say "@#{@rcfile.active_profile[0]} created the list \"#{list}\"."
+      say I18n.t("tasks.list.create.success",
+                 :profile => @rcfile.active_profile[0],
+                 :list => list)
     end
 
-    desc "information [USER/]LIST", "Retrieves detailed information about a Twitter list."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
+    desc "information [USER/]LIST", I18n.t("tasks.list.information.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
     def information(list)
       owner, list = list.split('/')
       if list.nil?
@@ -80,37 +90,37 @@ module T
       if options['csv']
         require 'csv'
         require 'fastercsv' unless Array.new.respond_to?(:to_csv)
-        say ["ID", "Description", "Slug", "Screen name", "Created at", "Members", "Subscribers", "Following", "Mode", "URL"].to_csv
+        say I18n.t(["list_attrs.id", "list_attrs.description", "list_attrs.slug", "list_attrs.screen-name", "list_attrs.created-at", "list_attrs.members", "list_attrs.subscribers", "list_attrs.following", "list_attrs.mode", "list_attrs.url"]).to_csv
         say [list.id, list.description, list.slug, list.user.screen_name, csv_formatted_time(list), list.member_count, list.subscriber_count, list.following?, list.mode, "https://twitter.com#{list.uri}"].to_csv
       else
         array = []
-        array << ["ID", list.id.to_s]
-        array << ["Description", list.description] unless list.description.nil?
-        array << ["Slug", list.slug]
-        array << ["Screen name", "@#{list.user.screen_name}"]
-        array << ["Created at", "#{ls_formatted_time(list)} (#{time_ago_in_words(list.created_at)} ago)"]
-        array << ["Members", number_with_delimiter(list.member_count)]
-        array << ["Subscribers", number_with_delimiter(list.subscriber_count)]
-        array << ["Status", list.following ? "Following" : "Not following"]
-        array << ["Mode", list.mode]
-        array << ["URL", "https://twitter.com#{list.uri}"]
+        array << [I18n.t("list_attrs.id"), list.id.to_s]
+        array << [I18n.t("list_attrs.description"), list.description] unless list.description.nil?
+        array << [I18n.t("list_attrs.slug"), list.slug]
+        array << [I18n.t("list_attrs.screen-name"), "@#{list.user.screen_name}"]
+        array << [I18n.t("list_attrs.created-at"), "#{ls_formatted_time(list)} (#{time_ago_in_words(list.created_at)} ago)"]
+        array << [I18n.t("list_attrs.members"), number_with_delimiter(list.member_count)]
+        array << [I18n.t("list_attrs.subscribers"), number_with_delimiter(list.subscriber_count)]
+        array << [I18n.t("list_attrs.status"), list.following ? I18n.t("list_attrs.following") : I18n.t("list_attrs.not-following")]
+        array << [I18n.t("list_attrs.mode"), list.mode]
+        array << [I18n.t("list_attrs.url"), "https://twitter.com#{list.uri}"]
         print_table(array)
       end
     end
     map %w(details) => :information
 
-    desc "members [USER/]LIST", "Returns the members of a Twitter list."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "followers", :aliases => "-v", :type => :boolean, :default => false, :desc => "Sort by total number of favorites."
-    method_option "followers", :aliases => "-f", :type => :boolean, :default => false, :desc => "Sort by total number of followers."
-    method_option "friends", :aliases => "-e", :type => :boolean, :default => false, :desc => "Sort by total number of friends."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify user via ID instead of screen name."
-    method_option "listed", :aliases => "-d", :type => :boolean, :default => false, :desc => "Sort by number of list memberships."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
-    method_option "posted", :aliases => "-p", :type => :boolean, :default => false, :desc => "Sort by the time when Twitter account was posted."
-    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => "Reverse the order of the sort."
-    method_option "tweets", :aliases => "-t", :type => :boolean, :default => false, :desc => "Sort by total number of Tweets."
-    method_option "unsorted", :aliases => "-u", :type => :boolean, :default => false, :desc => "Output is not sorted."
+    desc "members [USER/]LIST", I18n.t("tasks.list.members.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "favorites", :aliases => "-v", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.favorites")
+    method_option "followers", :aliases => "-f", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.followers")
+    method_option "friends", :aliases => "-e", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.friends")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.common_options.id")
+    method_option "listed", :aliases => "-d", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.listed")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
+    method_option "posted", :aliases => "-p", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.posted")
+    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.reverse")
+    method_option "tweets", :aliases => "-t", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.tweets")
+    method_option "unsorted", :aliases => "-u", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.unsorted")
     def members(list)
       owner, list = list.split('/')
       if list.nil?
@@ -130,8 +140,8 @@ module T
       print_users(users)
     end
 
-    desc "remove LIST USER [USER...]", "Remove members from a list."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify input as Twitter user IDs instead of screen names."
+    desc "remove LIST USER [USER...]", I18n.t("tasks.list.remove.desc")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.list.remove.id")
     def remove(list, user, *users)
       users.unshift(user)
       require 't/core_ext/string'
@@ -149,21 +159,30 @@ module T
         end
       end
       number = users.length
-      say "@#{@rcfile.active_profile[0]} removed #{number} #{number == 1 ? 'member' : 'members'} from the list \"#{list}\"."
+      say I18n.t("tasks.list.remove.success",
+                 :profile => @rcfile.active_profile[0],
+                 :list => list,
+                 :count => number)
       say
       if options['id']
-        say "Run `#{File.basename($0)} list add --id #{list} #{users.join(' ')}` to undo."
+        say I18n.t("tasks.list.remove.add-instructions-id",
+                   :command_name => File.basename($0),
+                   :list => list,
+                   :users => users.join(' '))
       else
-        say "Run `#{File.basename($0)} list add #{list} #{users.map{|user| "@#{user}"}.join(' ')}` to undo."
+        say I18n.t("tasks.list.remove.add-instructions",
+                   :command_name => File.basename($0),
+                   :list => list,
+                   :users => users.map{|user| "@#{user}"}.join(' '))
       end
     end
 
-    desc "timeline [USER/]LIST", "Show tweet timeline for members of the specified list."
-    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => "Output in CSV format."
-    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => "Specify user via ID instead of screen name."
-    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => "Output in long format."
-    method_option "number", :aliases => "-n", :type => :numeric, :default => DEFAULT_NUM_RESULTS, :desc => "Limit the number of results."
-    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => "Reverse the order of the sort."
+    desc "timeline [USER/]LIST", I18n.t("tasks.list.timeline.desc")
+    method_option "csv", :aliases => "-c", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.csv")
+    method_option "id", :aliases => "-i", :type => "boolean", :default => false, :desc => I18n.t("tasks.common_options.id")
+    method_option "long", :aliases => "-l", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.long")
+    method_option "number", :aliases => "-n", :type => :numeric, :default => DEFAULT_NUM_RESULTS, :desc => I18n.t("tasks.common_options.number")
+    method_option "reverse", :aliases => "-r", :type => :boolean, :default => false, :desc => I18n.t("tasks.common_options.sorts.reverse")
     def timeline(list)
       owner, list = list.split('/')
       if list.nil?
